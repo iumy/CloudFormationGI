@@ -27,7 +27,7 @@ jobs:
       working-directory: src
 
     - name: Copy s3 bucket template
-      run: cp /templates/lambdasrcbucket.yml .
+      run: cp ./templates/lambdasrcbucket.yml .
 
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v5.1.0
