@@ -1,10 +1,10 @@
 AWSTemplateFormatVersion: '2010-09-09'
 
-Description: REST API using AWS API Gateway with a Lambda Integration
+Description: REST API using AWS API Gateway with a Lambda Integration changed by GI
 
 Resources:
 
-  SimpleRestAPI:
+  GISimpleRestAPI:
     Type: AWS::ApiGateway::RestApi
     Properties:
       Description: REST API that gets users IP
@@ -16,9 +16,9 @@ Resources:
   ApiGatewayResource:
     Type: AWS::ApiGateway::Resource
     Properties:
-      ParentId: !GetAtt SimpleRestAPI.RootResourceId
+      ParentId: !GetAtt GISimpleRestAPI.RootResourceId
       PathPart: 'ip'
-      RestApiId: !Ref SimpleRestAPI
+      RestApiId: !Ref GISimpleRestAPI
 
   ApiGatewayMethod:
     Type: AWS::ApiGateway::Method
@@ -31,13 +31,13 @@ Resources:
         Type: AWS_PROXY
         Uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaFunction.Arn}/invocations'
       ResourceId: !Ref ApiGatewayResource
-      RestApiId: !Ref SimpleRestAPI
+      RestApiId: !Ref GISimpleRestAPI
 
   ApiGatewayModel:
     Type: AWS::ApiGateway::Model
     Properties:
       ContentType: 'application/json'
-      RestApiId: !Ref SimpleRestAPI
+      RestApiId: !Ref GISimpleRestAPI
       Schema: {}
 
   ApiGatewayStage:
@@ -45,7 +45,7 @@ Resources:
     Properties:
       DeploymentId: !Ref ApiGatewayDeployment
       Description: REST API dev stage
-      RestApiId: !Ref SimpleRestAPI
+      RestApiId: !Ref GISimpleRestAPI
       StageName: 'dev'
 
   ApiGatewayDeployment:
@@ -53,7 +53,7 @@ Resources:
     DependsOn: ApiGatewayMethod
     Properties:
       Description: Lambda API Deployment
-      RestApiId: !Ref SimpleRestAPI
+      RestApiId: !Ref GISimpleRestAPI
 
   LambdaFunction:
     Type: AWS::Lambda::Function
