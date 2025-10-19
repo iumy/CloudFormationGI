@@ -36,7 +36,7 @@ jobs:
         #aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-2
         role-to-assume: ${{ secrets.AWS_ACCOUNT_ID }}
-        role-session-name: MySessionName
+        role-session-name: MySessionName 
 
     - name: Deploy infrastructure with CloudFormation
       id: infrastructure-stack
