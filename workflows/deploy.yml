@@ -1,0 +1,56 @@
+
+on:
+  push:
+    branches:
+      - main
+  pull-request:
+    branches:
+      - main
+
+name: Deploy lambda
+
+jobs:
+  # This job will run on every code change to the master branch, but will only deploy
+  # changes if the infrastructure CloudFormation template in the repository have changed.
+  deploy-infrastructure:
+    name: Deploy infrastructure
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: install zip
+      uses: montudor/action-zip@v1
+
+    - name: zip output
+      run: zip -qq -r ../lambda.zip .
+      working-directory: src
+
+    - name: Copy s3 bucket template
+      run: cp /templates/lambdasrcbucket.yml .
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v5.1.0
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-2
+        role-to-assume: ${{ secrets.AWS_ACCOUNT_ID }}
+
+    - name: Deploy infrastructure with CloudFormation
+      id: infrastructure-stack
+      uses: aws-actions/aws-cloudformation-github-deploy@v1
+      with:
+        name: lambdas3
+        template: templates/lambdasrcbucket.yml
+        role-arn: arn:aws:iam::${{ steps.creds.outputs.aws-account-id }}:role/github-actions-cloudformation-stack-role
+        no-fail-on-empty-changeset: "1"
+
+    - name: Upload source
+      run: aws s3 cp ./lambda.zip s3://gi-lambda-src-bucket
+
+
+
