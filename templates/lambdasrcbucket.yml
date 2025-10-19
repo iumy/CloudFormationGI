@@ -1,0 +1,23 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: S3 Bucket for Lambda Source Code
+
+Resources:
+
+  GILambdaSrcBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - BucketKeyEnabled: false
+            ServerSideEncryptionByDefault:
+              SSEAlgorithm: "AES256"
+      BucketName: "gi-lambda-src-bucket"
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: "BucketOwnerEnforced"
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
