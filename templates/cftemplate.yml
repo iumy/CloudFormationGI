@@ -59,18 +59,8 @@ Resources:
     Type: AWS::Lambda::Function
     Properties:
       Code:
-        ZipFile: |
-          import json
-          def lambda_handler(event, context):
-              ip_address = event['requestContext']['identity']['sourceIp']
-              return {
-                  'body': json.dumps({"ip_address": ip_address}),
-                  'headers': {
-                      'Content-Type': 'application/json'
-                  },
-                  'statusCode': 200
-              }
-
+        S3Bucket: gi-lambda-src-bucket
+        S3Key: lambda.zip
       Description: AWS Lambda function
       FunctionName: 'get_ip'
       Handler: index.lambda_handler
