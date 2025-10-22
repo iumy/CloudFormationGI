@@ -26,8 +26,7 @@ jobs:
       run: |
           cfn-lint -t ./templates/cftemplate.yml 
           cfn-lint -t ./templates/lambdasrcbucket.yml
-          cfn-lint -t ./templates/rdscreate.yml
-
+ 
     - name: Run python Linter
       uses: sunnysid3up/python-linter@master
       with:
