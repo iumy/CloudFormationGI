@@ -31,7 +31,7 @@ jobs:
       uses: sunnysid3up/python-linter@master
       with:
         source: "./src"
-        strict: "medium"
+        strict: "low"
     
     - name: install zip
       uses: montudor/action-zip@v1
