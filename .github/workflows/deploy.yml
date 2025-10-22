@@ -69,7 +69,7 @@ jobs:
         name: rds-gi1
         template: templates/rdscreate.yml
         role-arn: ${{ secrets.AWS_ACCOUNT_ID }}
-        parameter-overrides: "DBName=${{GISECRET_GIDBNAME}},DBUser=${{GISECRET_GIDBUSER}},DBPass=${{GISECRET_GIDBPASS}}"
+        parameter-overrides: "DBName=$GISECRET_GIDBNAME,DBUser=$GISECRET_GIDBUSER,DBPass=$GISECRET_GIDBPASS"
         no-fail-on-empty-changeset: "1"      
         
     - name: Deploy S3 Bucket
