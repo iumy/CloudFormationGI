@@ -54,9 +54,9 @@ jobs:
     - name: Read secrets from AWS Secrets Manager into environment variables
       uses: abhilash1in/aws-secrets-manager-action@v2.1.0
       with:
-        secrets-ids: | 
-          ,gisecret
-        parse-json-secrets: true
+        secrets: | 
+          ,GISecret
+        parse-json: true
 
     - name: Check if env variable is set after fetching secrets
       run: if [ -z ${GIDBNAME+x} ]; then echo "SECRET unset"; else echo "SECRET retrieved"; fi
