@@ -1,4 +1,4 @@
-import boto3
+#import boto3
 import pymysql
 import sys
 import json
@@ -9,24 +9,24 @@ secret_name = "GISecret"
 region_name = "us-east-1"
 
 # Create a Secrets Manager client
-session = boto3.session.Session()
-client = session.client(service_name="secretsmanager", region_name=region_name)
+#session = boto3.session.Session()
+#client = session.client(service_name="secretsmanager", region_name=region_name)
 
-try:
-    get_secret_value_response = client.get_secret_value(SecretId=secret_name)
-except ClientError as e:
+#try:
+#    get_secret_value_response = client.get_secret_value(SecretId=secret_name)
+#except ClientError as e:
     # For a list of exceptions thrown, see
     # https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_GetSecretValue.html
-    raise e
+#    raise e
 
-secret = get_secret_value_response["SecretString"]
+#secret = get_secret_value_response["SecretString"]
 
 try:
     conn = pymysql.connect(
         host="GI-RDS-Mysql-Instance1",
-        user=secret["GIDBUser"],
-        passwd=secret["GIDBPass"],
-        db=secret["GIDbName"],
+        user='GIAdmin', #secret["GIDBUser"],
+        passwd= 'RndP@ssw25!', #secret["GIDBPass"],
+        db='GIRDS1', #secret["GIDbName"],
         connect_timeout=5,
     )
 except pymysql.MySQLError as e:
