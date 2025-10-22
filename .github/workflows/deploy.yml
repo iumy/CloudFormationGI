@@ -41,7 +41,7 @@ jobs:
       uses: montudor/action-zip@v1
 
     - name: zip output
-      run: zip -qq -r ../lambda.zip lambda.py
+      run: zip -qq -r ../lambda.zip lambda.py package
       working-directory: src
 
     - name: Copy s3 bucket template
