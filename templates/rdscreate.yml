@@ -6,9 +6,9 @@ Resources:
   GIRDSMysqlInstance:
     Type: AWS::RDS::DBInstance
     Properties:
-      DBName:  '{{resolve:secretsmanager:GISecret:SecretString:GIDBNAME}}'
-      MasterUsername:  '{{resolve:secretsmanager:GISecret:SecretString:GIDBUSER}}'
-      MasterUserPassword:  '{{resolve:secretsmanager:GISecret:SecretString:GIDBPASS}}'
+      DBName:  '{{resolve:secretsmanager:GISecret:SecretString:GIDbName}}'
+      MasterUsername:  '{{resolve:secretsmanager:GISecret:SecretString:GIDBUser}}'
+      MasterUserPassword:  '{{resolve:secretsmanager:GISecret:SecretString:GIDBPass}}'
       Engine: MySQL
       DBInstanceClass: db.t2.micro
       StorageType: gp2
