@@ -59,7 +59,7 @@ jobs:
         parse-json: true
 
     - name: Check if env variable is set after fetching secrets
-      run: if [ -z ${GIDBNAME+x} ]; then echo "SECRET unset"; else echo "SECRET retrieved"; fi
+      run: if [ -z ${GISECRET_GIDBNAME+x} ]; then echo "SECRET unset"; else echo "SECRET retrieved"; fi
 
     - name: Deploy Mysql
       id: rds-stack-gi
@@ -68,7 +68,7 @@ jobs:
         name: rds-gi1
         template: templates/rdscreate.yml
         role-arn: ${{ secrets.AWS_ACCOUNT_ID }}
-        parameter-overrides: "DBName=${{ env.GIDBNAME }},DBUser=${{ env.GIDBUSER }},DBPass=${{ env.GIDBPASS }}"
+        parameter-overrides: "DBName=${{ env.GISECRET_GIDBNAME }},DBUser=${{ env.GISECRET_GIDBUSER }},DBPass=${{ env.GISECRET_GIDBPASS }}"
         no-fail-on-empty-changeset: "1"      
         
     - name: Deploy S3 Bucket
