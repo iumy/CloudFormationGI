@@ -2,22 +2,13 @@ AWSTemplateFormatVersion: '2010-09-09'
 
 Description: RDS Mysql Instance
 
-Parameters:
-  DbName:
-    Type: String
-  DbUser:
-    Type: String
-  DbPass:
-    Type: String
-    NoEcho: true
-
 Resources:
   GIRDSMysqlInstance:
     Type: AWS::RDS::DBInstance
     Properties:
-      DBName: !Ref DbName
-      MasterUsername: !Ref DbUser
-      MasterUserPassword: !Ref DbPass
+      DBName:  '{{resolve:secretsmanager:GISecret:SecretString:GIDBNAME}}'
+      MasterUsername:  '{{resolve:secretsmanager:GISecret:SecretString:GIDBUSER}}'
+      MasterUserPassword:  '{{resolve:secretsmanager:GISecret:SecretString:GIDBPASS}}'
       Engine: MySQL
       DBInstanceClass: db.t2.micro
       StorageType: gp2
