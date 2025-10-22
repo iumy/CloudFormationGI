@@ -50,6 +50,27 @@ jobs:
         #aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
         aws-region: us-east-1
         role-to-assume: ${{ secrets.AWS_ACCOUNT_ID }}
+
+    - name: Read secrets from AWS Secrets Manager into environment variables
+      uses: abhilash1in/aws-secrets-manager-action@v2.1.0
+      with:
+        secrets: |
+          GIDbName
+          GIDBUser
+          GIDBPass
+
+    - name: Check if env variable is set after fetching secrets
+      run: if [ -z ${GIDBNAME+x} ]; then echo "SECRET unset"; else echo "SECRET retrieved"; fi
+
+    - name: Deploy Mysql
+      id: rds-stack-gi
+      uses: aws-actions/aws-cloudformation-github-deploy@v1
+      with:
+        name: rds-gi1
+        template: templates/rdscreate.yml
+        role-arn: ${{ secrets.AWS_ACCOUNT_ID }}
+        parameter-overrides: "DBName=${{ env.GIDBNAME }},DBUser=${{ env.GIDBUSER }},DBPass=${{ env.GIDBPASS }}"
+        no-fail-on-empty-changeset: "1"      
         
     - name: Deploy S3 Bucket
       id: s3-bucket-stack-gi
