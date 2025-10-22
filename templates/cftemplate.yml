@@ -11,13 +11,13 @@ Resources:
       EndpointConfiguration:
         Types:
           - REGIONAL
-      Name: whats-my-ip-cf
+      Name: insertcustomers
 
   ApiGatewayResource:
     Type: AWS::ApiGateway::Resource
     Properties:
       ParentId: !GetAtt GISimpleRestAPI.RootResourceId
-      PathPart: 'ip'
+      PathPart: 'rdsinsert'
       RestApiId: !Ref GISimpleRestAPI
 
   ApiGatewayMethod:
@@ -62,7 +62,7 @@ Resources:
         S3Bucket: gi-lambda-src-bucket
         S3Key: lambda.zip
       Description: AWS Lambda function
-      FunctionName: 'get_ip'
+      FunctionName: 'insertcust'
       Handler: index.lambda_handler
       MemorySize: 256
       Role: !GetAtt LambdaIamRole.Arn
