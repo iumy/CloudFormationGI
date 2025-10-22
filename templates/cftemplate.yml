@@ -66,7 +66,7 @@ Resources:
       Handler: index.lambda_handler
       MemorySize: 256
       Role: !GetAtt LambdaIamRole.Arn
-      Runtime: python3.9
+      Runtime: python3.13
       Timeout: 60
 
   ApiGatewayIamRole:
