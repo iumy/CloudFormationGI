@@ -55,9 +55,9 @@ jobs:
       uses: abhilash1in/aws-secrets-manager-action@v2.1.0
       with:
         secrets: |
-          GIDbName
-          GIDBUser
-          GIDBPass
+          GISecret/GIDbName
+          GISecret/GIDBUser
+          GISecret/GIDBPass
 
     - name: Check if env variable is set after fetching secrets
       run: if [ -z ${GIDBNAME+x} ]; then echo "SECRET unset"; else echo "SECRET retrieved"; fi
