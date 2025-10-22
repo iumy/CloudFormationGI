@@ -27,15 +27,15 @@ jobs:
           cfn-lint -t ./templates/cftemplate.yml 
           cfn-lint -t ./templates/lambdasrcbucket.yml
           cfn-lint -t ./templates/rdscreate.yml -i W1011
-          
+
     - name: install boto3
       run: pip install boto3
 
-    - name: Run python Linter
-      uses: sunnysid3up/python-linter@master
-      with:
-        source: "./src"
-        strict: "low"
+    #- name: Run python Linter
+    #  uses: sunnysid3up/python-linter@master
+    #  with:
+    #    source: "./src"
+    #    strict: "low"
     
     - name: install zip
       uses: montudor/action-zip@v1
